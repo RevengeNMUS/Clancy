@@ -15,12 +15,14 @@ while True:
     _, frame = smth.read()
     fam = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 
-    face_rect = face_cascade.detectMultiScale(fam)
+    face_rect = face_cascade.detectMultiScale(fam, scaleFactor=1.1, minNeighbors=7, minSize=(60, 60))
 
     for (x, y, w, h) in face_rect:
         cv2.rectangle(fam, (x, y), (x + w, y + h), (100, 255, 100), 3)
 
     cv2.imshow("Video Frame", fam)
+
+    print(len(face_rect) >= 1)
 
     if cv2.waitKey(5) & 0xFF == ord('q'):
         break
